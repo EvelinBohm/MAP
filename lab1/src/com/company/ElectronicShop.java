@@ -19,7 +19,7 @@ class ElectronicsShop
     }
 
     // Das teuerste Produkt aus den beiden Listen wird gesucht
-    public int MostExpensivProduct(int[] ListKeyboards,int []ListUSB)
+    public int mostExpensivProduct(int[] ListKeyboards,int []ListUSB)
     {
 
         int newSize=ListKeyboards.length+ListUSB.length;
@@ -49,7 +49,7 @@ class ElectronicsShop
     }
 
     // die Methode bestimmt anhand eines Budgets den besten Preis
-    public int BudgetProduct(int [] PriceList,int budget)
+    public int budgetProduct(int [] PriceList,int budget)
     {
         int ProductPrice=0;
 
@@ -62,21 +62,21 @@ class ElectronicsShop
     }
 
     // bestimmt anhand eines Budgets den maximalen Geldbetrag mit dem man sich eine Kombination aus Tastatur und USB kaufen aknn
-    public int BudgetForUSBAndKeyboard(int[] ListUSB,int[] ListKeyboards, int budget)
+    public int budgetForUSBAndKeyboard(int[] ListUSB,int[] ListKeyboards, int budget)
     {
-        int MaxMoneySum=0;
+        int maxMoneySum=0;
         int FoundSum=0;
         for (int i:ListKeyboards)
             for (int j:ListUSB)
             {
                 if (i+j<budget)//es wird ein maximaler Betrag gesucht
                     FoundSum=i+j;
-                if (FoundSum>MaxMoneySum)// es wird uberpruft ob kein anderer maximaler Betrag existiert
-                    MaxMoneySum=FoundSum;
+                if (FoundSum>maxMoneySum)// es wird uberpruft ob kein anderer maximaler Betrag existiert
+                    maxMoneySum=FoundSum;
 
             }
-        if(MaxMoneySum==0)
+        if(maxMoneySum==0)
             return -1;
-        return MaxMoneySum;
+        return maxMoneySum;
     }
 }

@@ -4,7 +4,7 @@ class Aufgabe3
 {
 
     // Die Methode gibt ein Array zurueck, dass die Summe von zwei Arrays berechnet (die Arrays representieren Zahlen)
-    int[] SumArrays(int[] FirstArrayofNr,int[] SecondArrayofNr)
+    int[] sumArrays(int[] FirstArrayofNr,int[] SecondArrayofNr)
     {
         int[] result=new int[FirstArrayofNr.length];
         int carry=0;
@@ -35,7 +35,7 @@ class Aufgabe3
     }
 
     // Die Methode gibt ein Array zurueck, dass die Differenz von zwei Arrays berechnet (die Arrays representieren Zahlen)
-    public int[] SubArray(int[] FirstArray,int[] SecondArray)
+    public int[] subArray(int[] FirstArray,int[] SecondArray)
     {
         int FirstNr=0,SecondNr=0,result=0;
         int[] resultarr=new int[FirstArray.length];
@@ -88,7 +88,7 @@ class Aufgabe3
     }
 
 
-    int[] MultipicationArray(int[] FirstArrayofNr,int number)
+    int[] multipicationArray(int[] FirstArrayofNr,int number)
     {
         int[] result=new int[FirstArrayofNr.length];
         int carry=0;
@@ -119,7 +119,7 @@ class Aufgabe3
     }
 
     // eine Nummer die als Array dargestellt ist, soll durch eine ganze Zahl geteilt werden
-    int[] DivArray(int[] FirstArrayofNr,int number)
+    int[] divArray(int[] FirstArrayofNr,int number)
     {
         //teilen mit 0 nicht moeglich
         if (number==0)

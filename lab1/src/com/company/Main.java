@@ -41,12 +41,12 @@ public class Main
         int[] SecondArrayNrDif2 = new int[]{9,4,0,0,0,0,0,0,0};
         int[] MultiplicationArray = new int[]{2,3,6,0,0,0,0,0,0};
         int[] DivisionArray = new int[]{2,3,6,0,0,0,0,0,0};
-        System.out.println("Summe:"+ Arrays.toString(aufgabe3.SumArrays(FirstArrayNr,SecondArrayNr)));
-        System.out.println("Dif:"+ Arrays.toString(aufgabe3.SubArray(FirstArrayNrDif,SecondArrayNrDif)));
-        System.out.println("Dif:"+ Arrays.toString(aufgabe3.SubArray(FirstArrayNrDif2,SecondArrayNrDif2)));
-        System.out.println("Mul:"+ Arrays.toString(aufgabe3.MultipicationArray(MultiplicationArray,5)));
-        System.out.println("Div:"+ Arrays.toString(aufgabe3.DivArray(DivisionArray,3)));
-        aufgabe3.DivArray(DivisionArray,0);
+        System.out.println("Summe:"+ Arrays.toString(aufgabe3.sumArrays(FirstArrayNr,SecondArrayNr)));
+        System.out.println("Dif:"+ Arrays.toString(aufgabe3.subArray(FirstArrayNrDif,SecondArrayNrDif)));
+        System.out.println("Dif:"+ Arrays.toString(aufgabe3.subArray(FirstArrayNrDif2,SecondArrayNrDif2)));
+        System.out.println("Mul:"+ Arrays.toString(aufgabe3.multipicationArray(MultiplicationArray,5)));
+        System.out.println("Div:"+ Arrays.toString(aufgabe3.divArray(DivisionArray,3)));
+        aufgabe3.divArray(DivisionArray,0);
 
 
         System.out.println("---------------------------------------------------\nAufgabe4:");
@@ -60,15 +60,15 @@ public class Main
         System.out.println("Tastaturliste:"+ Arrays.toString(Keyboard));
         System.out.println("USB Liste:"+ Arrays.toString(USB));
         System.out.println("Gunstigste Tastatur:"+ (aufgabe4.cheapestKeyboar(Keyboard)));
-        System.out.println("Teuerstes Produkt:"+ (aufgabe4.MostExpensivProduct(Keyboard,USB)));
+        System.out.println("Teuerstes Produkt:"+ (aufgabe4.mostExpensivProduct(Keyboard,USB)));
         System.out.println("Preis:"+ Arrays.toString(Price));
-        System.out.println("Buget: 30 \nTeuerstes budget Produkt:"+(aufgabe4.BudgetProduct(Price,30)));
+        System.out.println("Buget: 30 \nTeuerstes budget Produkt:"+(aufgabe4.budgetProduct(Price,30)));
         System.out.println("Neue TastaturListe:"+ Arrays.toString(Keyboard2));
         System.out.println("Neue ListeUSB:"+ Arrays.toString(USB2));
         int buget=60;
-        System.out.println((String.format("Max Geldbetrag fur USB+Tastatur mit %d buget:"+ (aufgabe4.BudgetForUSBAndKeyboard(Keyboard2,USB2 ,buget)),buget)));
+        System.out.println((String.format("Max Geldbetrag fur USB+Tastatur mit %d buget:"+ (aufgabe4.budgetForUSBAndKeyboard(Keyboard2,USB2 ,buget)),buget)));
         System.out.println("Neue Tastaturliste:"+ Arrays.toString(Keyboardfail));
-        System.out.println((String.format("Max Geldbetrag fur USB+Tastatur mit %d buget:"+ (aufgabe4.BudgetForUSBAndKeyboard(Keyboardfail,USB2 ,buget)),buget)));
+        System.out.println((String.format("Max Geldbetrag fur USB+Tastatur mit %d buget:"+ (aufgabe4.budgetForUSBAndKeyboard(Keyboardfail,USB2 ,buget)),buget)));
 
 
     }
