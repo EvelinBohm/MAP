@@ -1,7 +1,7 @@
 package com.company;
 
 /**
- *Die Klasse Hochsprung implementiert die kalkuliereZeit Methode,die von der Klasse Leichtathletik vererbt wurde.
+ *Die Klasse Hochsprung implementiert die kalkuliereZeit Methode,die von der Klasse Leichtathletik vererbt wurde....
  */
 public  class Hochsprung extends  Leichtathletik{
 
@@ -11,6 +11,7 @@ public  class Hochsprung extends  Leichtathletik{
      */
     @Override
     public double kalkuliereZeit(){
+        int i=0;
         return 20;
     }
 }
