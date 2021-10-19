@@ -1,7 +1,7 @@
 package com.company;
 
 /**
- *  Die Klasse Leichtathletik mplementiert das Sport interface
+ *  Die Klasse Leichtathletik implementiert das Sport interface
  */
 public abstract class Leichtathletik implements  Sport{
 

@@ -5,8 +5,8 @@ package com.company;
  */
 public  class Hochsprung extends  Leichtathletik{
 
-    /*
-     *ueberschreibt die kalkuliereZeit Methode
+    /**
+     * Die Methode ueberschreibt die kalkuliereZeit Methode
      * @return double,gibt die Zeit die fuer Hochsprung noetig ist, zurueck
      */
     @Override

@@ -9,7 +9,7 @@ import java.util.Scanner;
  */
 public class UI {
 
-    /*
+    /**
      *Die Methode liest die Daten vom Benutzer
      * @return Benutzer, gibt den Benuzter mit den gegeben Daten zurueck
      */
@@ -58,7 +58,7 @@ public class UI {
     }
 
 
-    /*
+    /**
      *Die Methode zeigt die Angendungsmoglichkeiten an und ruft die
      * vom Benutzer gewaehlten Methoden auf
      */

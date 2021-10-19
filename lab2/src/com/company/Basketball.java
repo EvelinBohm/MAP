@@ -6,8 +6,8 @@ package com.company;
 
 public  class Basketball extends  Mannschaftsport{
 
-    /*
-     *ueberschreibt die kalkuliereZeit Methode
+    /**
+     * Die Methode ueberschreibt die kalkuliereZeit Methode
      * @return double,gibt die Zeit die fuer Basketball noetig ist, zurueck
      */
     @Override

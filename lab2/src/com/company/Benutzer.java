@@ -2,22 +2,28 @@
 package com.company;
 
 import java.util.ArrayList;
+
 /**
-The Benutzer Klasse implementiert 3 Methoden, die die Gesammtzeit bzw Durchschnittszeit von
-gewissen Sportarten berechnet und auch ausdrueckt.
-
-@author Evelin Bohm
-* @version 1.0
-* @since 2021-10-18
-
-*/
-
+ *
+ * The Benutzer Klasse implementiert 3 Methoden, die die Gesammtzeit bzw Durchschnittszeit von
+ * gewissen Sportarten berechnet und auch ausdrueckt.
+ *
+ *  @author Evelin Bohm
+ *  @version 1.0
+ *  @since 2021-10-18
+ */
 public class Benutzer {
     private String vorName;
     private String nachName;
     private ArrayList<Sport> sport;
 
-    //Konstruktor
+
+    /**
+     *
+     * @param vorName der Vorname des Benutzers
+     * @param nachName der Nachname des Benutzers
+     * @param sport eine Liste von Sportarten
+     */
     public Benutzer(String vorName,String nachName, ArrayList<Sport> sport)
     {
         this.vorName=vorName;
@@ -25,8 +31,8 @@ public class Benutzer {
         this.sport=sport;
     }
 
-    /*
-     *Methode berechnet die Gesammtzeit, die mit Sport treiben verbracht wurde
+    /**
+     * Die Methode berechnet die Gesammtzeit, die mit Sport treiben verbracht wurde
      * @return double,die Methode gibt die Gesammtzeit,die mit Sport verbracht wurde
      * aus der Liste des Benutzers zurueck
      */
@@ -41,8 +47,8 @@ public class Benutzer {
          return sum;
     }
 
-    /*
-     *Methode berechnet die Durchschnittszeit, die mit Sport treiben verbracht wurde
+    /**
+     * Die Methode berechnet die Durchschnittszeit, die mit Sport treiben verbracht wurde
      * @return double,die Methode gibt die Durchschnittszeit,die mit Sport verbracht wurde
      * aus der Liste des Benutzers zurueck
      */
@@ -55,9 +61,9 @@ public class Benutzer {
         return sum/this.sport.size();
     }
 
-    /*
-     *Methode berechnet die Gesammtzeit, die mit einer gewissen Sportart verbracht wurde
-     * @param sport_art enthaelt die Sportart anhand welchem die Gesammtzeit berechnet wird
+    /**
+     * Die Methode berechnet die Gesammtzeit, die mit einer gewissen Sportart verbracht wurde
+     * @param sport_art enthaelt die Sportart anhand welcher die Gesammtzeit berechnet wird
      * @return double,die Methode gibt die Gesammtzeit von der input sport_art zurucek
      */
     public double kalkuliereZeit(Sport sport_art)

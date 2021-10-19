@@ -12,7 +12,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class BenutzerTest {
 
 
-    /* Die Methode testet ob die Gesammtzeit,die furs Sport treiben verbraucht wurde
+    /**
+     * Die Methode testet ob die Gesammtzeit,die furs Sport treiben verbraucht wurde
      *gut berechnet wurde
      */
     @Test
@@ -38,7 +39,8 @@ class BenutzerTest {
     }
 
 
-    /* Die Methode testet ob die Durchschnittszeit(Minuten),die furs Sport treiben verbraucht wurde
+    /**
+     * Die Methode testet ob die Durchschnittszeit(Minuten),die furs Sport treiben verbraucht wurde
      *gut berechnet wurde
      */
     @Test
@@ -68,7 +70,8 @@ class BenutzerTest {
     }
 
 
-    /* Die Methode testet ob die Gesammtzeit,die man die fuer eine gegebenen Sportarten braucht
+    /**
+     *  Die Methode testet ob die Gesammtzeit,die man die fuer eine gegebenen Sportarten braucht
      *gut berechnet wurde
      */
     @Test
