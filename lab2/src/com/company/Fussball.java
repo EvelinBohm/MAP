@@ -5,8 +5,8 @@ package com.company;
  */
 public  class Fussball extends Mannschaftsport {
 
-     /*
-     *ueberschreibt die kalkuliereZeit Methode
+     /**
+     * Die Methode ueberschreibt die kalkuliereZeit Methode
      * @return double,gibt die Zeit die fuer Fussball noetig ist, zurueck
      */
     @Override
