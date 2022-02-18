@@ -1,33 +1,70 @@
 package com.company.Controller;
 
-import com.company.model.Course;
-import com.company.model.Student;
-import com.company.model.Teacher;
-import com.company.repository.ICrudRepository;
+import com.company.Model.Course;
+import com.company.Model.Student;
+import com.company.Model.Teacher;
+import com.company.Repository.CourseRepository;
+import com.company.Repository.StudentRepository;
+import com.company.Repository.TeacherRepository;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
- * the RegistrationSystemController class uses the methods from the ICrudRepository interface
- * to implement 3 main methods
+ * the RegistrationSystemController class implements
+ * 2 sort methods
+ * 2 filter methods
+ * a register method that registers a student to a course
+ * a retrieveCoursesWithFreePlaces method that searches for courses with available places
+ * a deleteCourseByTeacher method that delete a course
  *
  * @author Bohm Evelin
- * @version  %I%, %G%
+ * @version  16.11.2021
  * @since 1.0
  *
  */
 
 public class RegistrationSystemController
 {
-    private final ICrudRepository repository;
-
+    private  StudentRepository studentRepository;
+    private  TeacherRepository teacherRepository;
+    private  CourseRepository courseRepository;
     /**
      * initializes the repository
-     * @param repository-most not be null
+     * @param studentRepository-most not be null
+     * @param teacherRepository-most not be null
+     * @param courseRepository-most not be null
      */
-    public RegistrationSystemController(ICrudRepository repository) {
-        this.repository = repository;
+    public RegistrationSystemController(StudentRepository studentRepository, TeacherRepository teacherRepository, CourseRepository courseRepository) {
+        this.studentRepository = studentRepository;
+        this.teacherRepository = teacherRepository;
+        this.courseRepository = courseRepository;
+    }
+
+    /**
+     * gets the student repository
+     * @return a student repository
+     */
+    public StudentRepository getStudentRepository() {
+        return studentRepository;
+    }
+
+    /**
+     * gets the teacher repository
+     * @return a teacher repository
+     */
+    public TeacherRepository getTeacherRepository() {
+        return teacherRepository;
+    }
+
+    /**
+     * gets the course repository
+     * @return a course repository
+     */
+    public CourseRepository getCourseRepository() {
+        return courseRepository;
     }
 
     /**
@@ -36,13 +73,12 @@ public class RegistrationSystemController
      * @param course-course to which the student wants to register, course must not be null
      * @return true- if the student was registered to the course or false - if there aren't places available for the course or if the student already has 30 credits
      */
-
     public boolean register( Student student,Course course)
     {
 
         if((course.getMaxEnrollment()-course.getNrOfEnrolledStudents())>0){
             if(student.getTotalCredits() + course.getCredits() <= 30) {
-                course.addStudent(student);
+               course.addStudent(student);
                 student.addCourse(course);
                 return true;
             }
@@ -57,7 +93,7 @@ public class RegistrationSystemController
      */
     public Iterable<Course> getAllCourses()
     {
-        return  repository.findAll();
+        return  courseRepository.findAll();
     }
 
 
@@ -93,12 +129,12 @@ public class RegistrationSystemController
     }
 
     /**
-     * deletes a course (the course can be deleted just from a teacher)
+     * deletes a course (the course can be deleted just by a teacher)
      * @param course-must not be null
      * @param teacher-must not be null
      * @return course-if the course has been deleted or null if the course couldn't be found
      */
-    public Course deleteCourseByTeacher(Course course, Teacher teacher)
+    public Course deleteCourseByTeacher(Course course, Teacher teacher,List<Student> studentsEnrolledForACourse)
     {
         List<Course>teachersCourses=teacher.getCourses();
         for (Course teachersCourse:teachersCourses)
@@ -106,16 +142,15 @@ public class RegistrationSystemController
 
             if (teachersCourse.getCourseID().equals(course.getCourseID()))
             {
-                repository.delete(course.getCourseID());
+                courseRepository.delete(course.getCourseID());
 
-                for (Student student:retrieveStudentsEnrolledForACourse(course))
+                for (Student student:studentsEnrolledForACourse)
                 {
                     student.setTotalCredits(student.getTotalCredits() - course.getCredits());
-                    List<Course>updatedList=student.getEnrolledCourses();
-                    updatedList.remove(course);
-                    student.setEnrolledCourses(updatedList);
+                    student.delete(course);
 
                 }
+                course.getStudentsEnrolled().clear();
                 return course;
             }
 
@@ -123,5 +158,68 @@ public class RegistrationSystemController
         return null;
 
     }
+
+    /**
+     * sorts a list of students alphabetically after the students last name
+     * @param students-must not be null
+     * @return the sorted list of students
+     */
+    public List<Student> sortStudentsAlphabetically(List<Student>students)
+    {
+        List<Student> sortedList = new ArrayList<>(students);
+        sortedList.sort(new Comparator<Student>() {
+            @Override
+            public int compare(Student o1, Student o2) {
+                return o1.getLastName().compareTo(o2.getLastName());
+            }
+        });
+        return sortedList;
+    }
+
+    /**
+     * sorts a list of courses alphabetically
+     * @param courses-must not be null
+     * @return the sorted list of courses
+     */
+    public List<Course> sortCoursesAlphabetically(List<Course> courses)
+    {
+        List<Course> sortedList = new ArrayList<>(courses);
+        sortedList.sort(new Comparator<Course>() {
+            @Override
+            public int compare(Course o1, Course o2) {
+                return o1.getName().compareTo(o2.getName());
+            }
+        });
+
+        return sortedList;
+    }
+
+    /**
+     * filters a list of students after a credit score
+     * @param credits-must be a positive number
+     * @param studentList -must be not null
+     * @return a list of students
+     */
+    public List<Student> filterStudentsByCreditNr(int credits,List<Student>studentList)
+    {
+        List<Student> filteredStudents=new ArrayList<>();
+        for (Student student:studentList)
+        {
+            if (student.getTotalCredits()==credits)
+                filteredStudents.add(student);
+        }
+        return filteredStudents;
+    }
+    /**
+     * filters a list of courses after a credit score
+     * @param credits-must be a positive number
+     * @return a list of courses
+     */
+    public List<Course> filterCoursesByCreditNr(int credits)
+    {
+        List<Course> courses=(List<Course>)getAllCourses();
+        return courses.stream().filter(course -> course.getCredits()==credits).collect(Collectors.toList());
+    }
+
 
 }

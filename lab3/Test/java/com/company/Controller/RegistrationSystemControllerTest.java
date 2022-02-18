@@ -1,14 +1,15 @@
 package com.company.Controller;
 
-import com.company.model.Course;
-import com.company.model.Student;
-import com.company.model.Teacher;
-import com.company.repository.CourseRepository;
-import com.company.repository.StudentRepository;
-import com.company.repository.TeacherRepository;
+import com.company.Model.Course;
+import com.company.Model.Student;
+import com.company.Model.Teacher;
+import com.company.Repository.CourseRepository;
+import com.company.Repository.StudentRepository;
+import com.company.Repository.TeacherRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,88 +21,81 @@ import static org.junit.jupiter.api.Assertions.*;
  * @version  %I%, %G%
  * @since 1.0
  */
+
 class RegistrationSystemControllerTest {
-    RegistrationSystemController RegistrationSystem;
-    StudentRepository StudentRepo;
-    CourseRepository CourseRepo;
-    TeacherRepository TeacherRepo;
-    Course map,bd,stat;
-    Teacher Peter,Linda;
-    Student Timi,Mia,Sam;
+    RegistrationSystemController registrationSystem;
+    StudentRepository studentRepo;
+    CourseRepository courseRepo;
+    TeacherRepository teacherRepo;
+    Course algebra,oop,algebraGer;
+    Teacher noah,lisa;
+    Student arthur,samantha,ben;
 
     /**
      * Initialization of data for test methods
      */
-    @BeforeEach
-    void setUp() {
-        StudentRepo=new StudentRepository();
-        TeacherRepo=new TeacherRepository();
-        CourseRepo=new CourseRepository();
-        RegistrationSystem=new RegistrationSystemController(CourseRepo);
+   @BeforeEach
+    void setUp() throws FileNotFoundException {
 
-        List<Student> studentsMapList=new ArrayList<>();
-        List<Student>studentsBdList=new ArrayList<>();
-        List<Student>studentsStatList=new ArrayList<>();
+       //reading data from the file (the files contain 3 Courses/Students/Teachers)
+       List<Course>courseRepoList=new ArrayList<>();
+       courseRepo=new CourseRepository(courseRepoList);
 
-        List<Course>courseListPeter=new ArrayList<>();
-        List<Course>courseListLinda=new ArrayList<>();
+       List<Student>studentRepoList=new ArrayList<>();
+       studentRepo=new StudentRepository(studentRepoList);
 
-        List<Course>timisList=new ArrayList<>();
-        List<Course>miasList=new ArrayList<>();
-        List<Course>samsList=new ArrayList<>();
+       List<Teacher>teacherRepoList=new ArrayList<>();
+       teacherRepo=new TeacherRepository(teacherRepoList);
 
-        Timi= new Student("Timothée","Chalamet",200L,0,timisList);
-        Mia= new Student("Mia","Clarke",201L,0,miasList);
-        Sam= new Student("Samuel","Watson",202L,0,samsList);
+       registrationSystem=new RegistrationSystemController(studentRepo,teacherRepo,courseRepo);
 
-        Peter=new Teacher("Peter","Mitchell",123L,courseListPeter);
-        Linda=new Teacher("Linda","Wood",127L,courseListLinda);
+       List<Student>studentListOop=new ArrayList<>();
+       List<Student>studentListAlgebra=new ArrayList<>();
+
+       List<Course>courseListLisa=new ArrayList<>();
+       List<Course>courseListNoah=new ArrayList<>();
+
+       List<Course>courseListArthur=new ArrayList<>();
+       List<Course>courseListSamantha=new ArrayList<>();
+       List<Course>courseListBen=new ArrayList<>();
 
 
-        map= new Course(125L,"map",Linda,1,studentsMapList,3);
-        bd= new Course(123L,"bd",Peter,2,studentsBdList,5);
-        stat= new Course(126L,"stat",Peter,4,studentsStatList,29);
-        courseListPeter.add(bd);
-        courseListPeter.add(stat);
-        courseListLinda.add(map);
+       lisa=new Teacher("Lisa","David",122L,courseListLisa);
+       noah=new Teacher("Noah","Williams",129L,courseListNoah);
 
-        CourseRepo.save(map);
-        CourseRepo.save(bd);
-        CourseRepo.save(stat);
+       oop= new Course(203L,"OOP",lisa,1,studentListOop,3);
+       algebra= new Course(204L,"Algebra",noah,2,studentListAlgebra,5);
 
-        StudentRepo.save(Timi);
-        StudentRepo.save(Mia);
-        StudentRepo.save(Sam);
+       arthur= new Student("Arthur","Lee",304L,0,courseListArthur);
+       samantha= new Student("Samantha","Allan",305L,0,courseListSamantha);
+       ben= new Student("Ben","Welly",306L,30,courseListBen);
 
-        TeacherRepo.save(Linda);
-        TeacherRepo.save(Peter);
+       courseListNoah.add(algebra);
+       courseListLisa.add(oop);
 
     }
 
     /**
      * tests the register methode
      */
+
     @Test
     void register() {
 
-        RegistrationSystem.register(Mia,map);
-        List<Course>courseListMia=Mia.getEnrolledCourses();
-        assertEquals(courseListMia.get(0).getName(),"map");
+        registrationSystem.register(arthur,oop);
+        List<Course>courseListArthur=arthur.getEnrolledCourses();
+        assertEquals(arthur.getTotalCredits(),3);
+        assertEquals(courseListArthur.get(0).getName(),"OOP");
+        assertEquals(oop.getStudentsEnrolled().get(0).getID(),304L);
 
-        RegistrationSystem.register(Mia,bd);
-        RegistrationSystem.register(Mia,stat);
-        List<Course>courseListMia2=Mia.getEnrolledCourses();
-        assertEquals(courseListMia2.size(),2);
-
-        RegistrationSystem.register(Timi,bd);
-        List<Course>courseListTimi=Timi.getEnrolledCourses();
-        assertEquals(courseListTimi.size(),1);
-
-        RegistrationSystem.register(Sam,bd);
-        List<Course>courseListSam=Sam.getEnrolledCourses();
+        registrationSystem.register(samantha,oop);
+        List<Course>courseListSam=samantha.getEnrolledCourses();
         assertEquals(courseListSam.size(),0);
+        assertEquals(samantha.getTotalCredits(),0);
 
-
+        registrationSystem.register(ben,oop);
+        List<Course>courseListBen=ben.getEnrolledCourses();
+        assertEquals(courseListBen.size(),0);
     }
 
     /**
@@ -109,13 +103,12 @@ class RegistrationSystemControllerTest {
      */
     @Test
     void retrieveCoursesWithFreePlaces() {
-        RegistrationSystem.register(Mia,map);
-        RegistrationSystem.register(Mia,bd);
-        RegistrationSystem.register(Timi,bd);
+        registrationSystem.register(arthur,oop);
+        registrationSystem.register(arthur,algebra);
+        registrationSystem.register(samantha,algebra);
 
-        List<Course>listCourseWithFreePlaces=RegistrationSystem.retrieveCoursesWithFreePlaces();
-        assertEquals(listCourseWithFreePlaces.get(0).getName(),"stat");
-        assertEquals(listCourseWithFreePlaces.size(),1);
+        List<Course>listCourseWithFreePlaces=registrationSystem.retrieveCoursesWithFreePlaces();
+        assertEquals(listCourseWithFreePlaces.size(),3);
 
     }
 
@@ -124,14 +117,14 @@ class RegistrationSystemControllerTest {
      */
     @Test
     void retrieveStudentsEnrolledForACourse() {
-        RegistrationSystem.register(Mia,map);
-        RegistrationSystem.register(Mia,bd);
-        RegistrationSystem.register(Timi,bd);
+        registrationSystem.register(arthur,oop);
+        registrationSystem.register(arthur,algebra);
+        registrationSystem.register(samantha,algebra);
 
-        List<Student>listStudents=RegistrationSystem.retrieveStudentsEnrolledForACourse(bd);
-        assertEquals(listStudents.size(),2);
-        List<Student>studentList=RegistrationSystem.retrieveStudentsEnrolledForACourse(stat);
-        assertEquals(studentList.size(),0);
+        List<Student>listStudents=registrationSystem.retrieveStudentsEnrolledForACourse(oop);
+        assertEquals(listStudents.size(),1);
+        List<Student>studentList=registrationSystem.retrieveStudentsEnrolledForACourse(algebra);
+        assertEquals(studentList.size(),2);
 
     }
 
@@ -140,15 +133,16 @@ class RegistrationSystemControllerTest {
      */
     @Test
     void deleteCourseByTeacher() {
-        RegistrationSystem.register(Mia,map);
-        RegistrationSystem.register(Mia,bd);
-        RegistrationSystem.register(Timi,bd);
-        assertEquals(Mia.getTotalCredits(),8);
-        assertEquals(Timi.getTotalCredits(),5);
 
-        Course course= RegistrationSystem.deleteCourseByTeacher(bd,Peter);
-        assertEquals(Mia.getTotalCredits(),3);
-        assertEquals(Timi.getTotalCredits(),0);
+        registrationSystem.register(arthur,oop);
+        registrationSystem.register(arthur,algebra);
+        registrationSystem.register(samantha,algebra);
+        assertEquals(arthur.getTotalCredits(),8);
+        assertEquals(samantha.getTotalCredits(),5);
+        List<Student>studentList=registrationSystem.retrieveStudentsEnrolledForACourse(algebra);
+        Course course= registrationSystem.deleteCourseByTeacher(algebra,noah,studentList);
+        assertEquals(arthur.getTotalCredits(),3);
+        assertEquals(samantha.getTotalCredits(),0);
 
 
     }
